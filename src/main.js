@@ -1,6 +1,13 @@
-import { createApp } from 'vue'
-import App from './App.vue'
-import router from './router'
-import store from './store'
+import { createApp } from "vue";
+import App from "./App.vue";
+import router from "./router";
+import store from "./store";
+import { authRef } from "./firebase/config";
 
-createApp(App).use(store).use(router).mount('#app')
+let app;
+
+authRef.onAuthStateChanged(() => {
+  if (!app) {
+    app = createApp(App).use(store).use(router).mount("#app");
+  }
+});
